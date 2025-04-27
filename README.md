@@ -23,7 +23,10 @@ docker volume rm postgres_postgres-data
 
 ```sh
 cargo build
+cargo build --features testing
 ```
+
+`testing` feature will mock the DB and its peripheral stuffs.
 
 ## Test crates
 
