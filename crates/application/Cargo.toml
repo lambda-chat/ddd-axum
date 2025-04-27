@@ -9,3 +9,7 @@ serde = { version = "1.0", features = ["derive"] }
 async-trait = "0.1"
 uuid = { version = "1.2", features = ["serde", "v4"] }
 chrono = { version = "0.4", features = ["serde", "clock"] }
+
+[dev-dependencies]
+tokio = { version = "1.28", features = ["full"] }
+infrastructure = { path = "../infrastructure", features = ["testing"] }

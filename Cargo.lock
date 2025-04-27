@@ -64,7 +64,9 @@ dependencies = [
  "async-trait",
  "chrono",
  "domain",
+ "infrastructure",
  "serde",
+ "tokio",
  "uuid",
 ]
 
