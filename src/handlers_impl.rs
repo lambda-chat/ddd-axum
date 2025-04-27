@@ -9,7 +9,6 @@ use uuid::Uuid;
 
 use interfaces::handlers::{create_user, get_user};
 
-#[axum::debug_handler]
 pub async fn create_user_impl(
     extension: Extension<Arc<UserService<SqlxUserRepository>>>,
     json: Json<CreateUserDto>,
