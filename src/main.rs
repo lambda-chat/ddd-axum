@@ -3,24 +3,14 @@ mod di;
 use axum::{Extension, serve};
 use std::{net::SocketAddr, sync::Arc};
 
-use crate::di::handlers::AppUserRepository;
-use crate::di::router::router;
+use crate::di::postgres::initialize_pool;
+use crate::di::router::{AppUserRepository, router};
 use application::service::UserService;
-
-#[cfg(not(feature = "testing"))]
-use sqlx::postgres::PgPoolOptions;
-#[cfg(feature = "testing")]
-use sqlx::{Pool, Postgres};
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
-    #[cfg(not(feature = "testing"))]
-    let pool = PgPoolOptions::new()
-        .max_connections(5)
-        .connect("postgres://admin:admin@localhost:5432/postgres-db")
-        .await?;
-    #[cfg(feature = "testing")]
-    let pool = Pool::<Postgres>::connect_lazy("postgres://mock").unwrap();
+    // Initialize the database connection pool
+    let pool = initialize_pool().await?;
 
     // Initialize the repository and service for dependency injection
     let repo = Arc::new(AppUserRepository::new(pool));

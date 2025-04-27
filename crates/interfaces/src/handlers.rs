@@ -7,8 +7,8 @@ use std::sync::Arc;
 use uuid::Uuid;
 
 pub async fn create_user<R>(
-    Json(payload): Json<CreateUserDto>,
     Extension(service): Extension<Arc<UserService<R>>>,
+    Json(payload): Json<CreateUserDto>,
 ) -> Result<Json<UserDto>, StatusCode>
 where
     R: UserRepository + 'static,
@@ -24,8 +24,8 @@ where
 }
 
 pub async fn get_user<R>(
-    Path(id): Path<Uuid>,
     Extension(service): Extension<Arc<UserService<R>>>,
+    Path(id): Path<Uuid>,
 ) -> Result<Json<UserDto>, StatusCode>
 where
     R: UserRepository + 'static,
