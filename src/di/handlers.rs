@@ -5,9 +5,9 @@ use std::sync::Arc;
 use uuid::Uuid;
 
 #[cfg(not(feature = "testing"))]
-use infrastructure::persistence::SqlxUserRepository as AppUserRepository;
+pub use infrastructure::persistence::SqlxUserRepository as AppUserRepository;
 #[cfg(feature = "testing")]
-use infrastructure::tests::persistence_test::TestUserRepository as AppUserRepository;
+pub use infrastructure::tests::persistence_test::TestUserRepository as AppUserRepository;
 
 #[rustfmt::skip::macros(inject)]
 macro_rules! inject {
