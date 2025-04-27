@@ -34,10 +34,10 @@ macro_rules! inject {
 //
 // ```rs
 // pub async def create_user(
-//     extension: Extension<Arc<UserService<SqlxUserRepository>>>,
+//     extension: Extension<Arc<UserService<AppUserRepository>>>,
 //     json: Json<CreateUserDto>,
 // ) -> Result<Json<UserDto>, StatusCode> {
-//     interfaces::handlers::create_user::<SqlxUserRepository>(json, extension)).await
+//     interfaces::handlers::create_user::<AppUserRepository>(json, extension)).await
 // }
 // ```
 
