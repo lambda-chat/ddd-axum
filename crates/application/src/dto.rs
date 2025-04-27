@@ -3,12 +3,12 @@ use domain::user::User;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CreateUserDto {
     pub name: String,
 }
 
-#[derive(Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct UserDto {
     pub id: Uuid,
     pub name: String,
