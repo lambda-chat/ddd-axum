@@ -1,9 +1,13 @@
 use application::dto::{CreateUserDto, UserDto};
 use application::service::UserService;
 use axum::{Extension, Json, extract::Path, http::StatusCode};
-use infrastructure::persistence::SqlxUserRepository;
 use std::sync::Arc;
 use uuid::Uuid;
+
+#[cfg(not(feature = "testing"))]
+use infrastructure::persistence::SqlxUserRepository as AppUserRepository;
+#[cfg(feature = "testing")]
+use infrastructure::tests::persistence_test::TestUserRepository as AppUserRepository;
 
 #[rustfmt::skip::macros(inject)]
 macro_rules! inject {
@@ -24,12 +28,18 @@ macro_rules! inject {
 
 // Example of macro expansion
 //
+// ```rs
+// inject!(create_user, interfaces::handlers::create_user, AppUserRepository, (json: Json<CreateUserDto>,));
+// ```
+//
+// ```rs
 // pub async def create_user(
 //     extension: Extension<Arc<UserService<SqlxUserRepository>>>,
 //     json: Json<CreateUserDto>,
 // ) -> Result<Json<UserDto>, StatusCode> {
 //     interfaces::handlers::create_user::<SqlxUserRepository>(json, extension)).await
 // }
+// ```
 
-inject!(create_user, interfaces::handlers::create_user, SqlxUserRepository, (json: Json<CreateUserDto>,));
-inject!(get_user, interfaces::handlers::get_user, SqlxUserRepository, (path: Path<Uuid>,));
+inject!(create_user, interfaces::handlers::create_user, AppUserRepository, (json: Json<CreateUserDto>,));
+inject!(get_user, interfaces::handlers::get_user, AppUserRepository, (path: Path<Uuid>,));

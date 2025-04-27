@@ -6,7 +6,11 @@ use std::{net::SocketAddr, sync::Arc};
 
 use crate::di::router::router;
 use application::service::UserService;
-use infrastructure::persistence::SqlxUserRepository;
+
+#[cfg(not(feature = "testing"))]
+use infrastructure::persistence::SqlxUserRepository as AppUserRepository;
+#[cfg(feature = "testing")]
+use infrastructure::tests::persistence_test::TestUserRepository as AppUserRepository;
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
@@ -17,7 +21,7 @@ async fn main() -> Result<(), anyhow::Error> {
         .await?;
 
     // Initialize the repository and service for dependency injection
-    let repo = Arc::new(SqlxUserRepository::new(pool));
+    let repo = Arc::new(AppUserRepository::new(pool));
     let service = Arc::new(UserService::new(repo));
 
     // Create the router with the service

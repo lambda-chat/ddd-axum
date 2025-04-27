@@ -27,3 +27,10 @@ application = { path = "crates/application" }
 infrastructure = { path = "crates/infrastructure" }
 interfaces = { path = "crates/interfaces" }
 anyhow = "1.0.98"
+
+[dev-dependencies]
+infrastructure = { path = "crates/infrastructure", features = ["testing"] }
+
+[features]
+testing = ["infrastructure/testing"]
+test = ["infrastructure/testing"]

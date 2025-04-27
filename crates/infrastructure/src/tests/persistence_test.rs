@@ -9,7 +9,8 @@ pub struct TestUserRepository {
 }
 
 impl TestUserRepository {
-    pub fn new() -> Self {
+    #[allow(unused_variables)]
+    pub fn new<T>(pool: T) -> Self {
         Self {
             users: Arc::new(Mutex::new(HashMap::new())),
         }
