@@ -1,10 +1,12 @@
+mod handlers_impl;
+
 use axum::{Extension, serve};
 use sqlx::postgres::PgPoolOptions;
 use std::{net::SocketAddr, sync::Arc};
 
+use crate::handlers_impl::router;
 use application::service::UserService;
 use infrastructure::persistence::SqlxUserRepository;
-use interfaces::router::router;
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
@@ -19,7 +21,7 @@ async fn main() -> Result<(), anyhow::Error> {
     let service = Arc::new(UserService::new(repo));
 
     // Create the router with the service
-    let app = router::<SqlxUserRepository>().layer(Extension(service));
+    let app = router().layer(Extension(service)); // NOTE: 動いたけど DI じゃない感
 
     // Serve the application
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
