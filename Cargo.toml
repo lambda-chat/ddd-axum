@@ -33,4 +33,3 @@ infrastructure = { path = "crates/infrastructure", features = ["testing"] }
 
 [features]
 testing = ["infrastructure/testing"]
-test = ["infrastructure/testing"]
